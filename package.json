@@ -2,6 +2,7 @@
   "name": "b8-dog-food",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://brain8torm.github.io/sb-dogfood-1/",
   "dependencies": {
     "@fontsource/nunito": "^4.5.12",
     "@testing-library/jest-dom": "^5.16.5",

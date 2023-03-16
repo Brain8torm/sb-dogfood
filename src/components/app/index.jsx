@@ -21,7 +21,6 @@ export function App() {
   }
 
   function handleInputChange(dataInput) {
-    console.log(searchQuery, dataInput);
     setSearchQuery(dataInput);
     setIsTyping(true);
   }

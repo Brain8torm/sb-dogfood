@@ -1,5 +1,4 @@
 import { Card } from "../card";
-import { dataCard } from '../../data';
 import styles from './card-list.module.css';
 import classNames from 'classnames';
 

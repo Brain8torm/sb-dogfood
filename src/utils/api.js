@@ -3,12 +3,16 @@ class Api {
     #headers;
 
     constructor({ baseUrl, headers }) {
-        thid.#baseUrl = baseUrl;
+        this.#baseUrl = baseUrl;
         this.#headers = headers;
     }
 
     #getResponse(res) {
         return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
+    }
+
+    #getApiUrl(path) {
+        return `${this.#baseUrl}/${path}`;
     }
 
 

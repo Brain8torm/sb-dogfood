@@ -12,7 +12,14 @@ class Api {
     }
 
     #getApiUrl(path) {
-        return `${this.#baseUrl}/${path}`;
+        return `${this.#baseUrl}${path}`;
+    }
+
+    getUserInfo() {
+        return fetch(this.#getApiUrl('/users/me'), {
+            headers: this.#headers
+        })
+            .then(this.#onResponse)
     }
 
 

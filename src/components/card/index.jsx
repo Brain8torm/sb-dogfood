@@ -39,6 +39,7 @@ export function Card({ name, price, discount, wight, description, picture }) {
           <h3 className={classNames(styles.name)}>{name}</h3>
         </div>
       </a>
+      <a href="#" className={classNames(styles.cart, styles.btn, styles.btn_type_primary)}>В корзину</a>
     </article >
   )
 }

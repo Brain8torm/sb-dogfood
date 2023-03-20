@@ -11,7 +11,9 @@ export function Card({ name, price, discount, wight, description, picture }) {
   return (
     <article className={classNames(styles.item, 'card')}>
       <div className={classNames(styles.sticky, styles.sticky__type_top_left)}>
+        { discount > 0 && 
         <span className={classNames(styles.discount)}>{` -${discount}%`}</span>
+        }
       </div>
       <div className={classNames(styles.sticky, styles.sticky__type_top_right)}>
         <button className={classNames(styles.favorite)}>

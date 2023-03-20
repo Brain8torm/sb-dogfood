@@ -7,7 +7,7 @@ class Api {
         this.#headers = headers;
     }
 
-    #getResponse(res) {
+    #onResponse(res) {
         return res.ok ? res.json() : res.json().then(err => Promise.reject(err));
     }
 

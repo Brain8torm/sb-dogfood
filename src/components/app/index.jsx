@@ -7,6 +7,7 @@ import { dataCard } from '../../data';
 import { Logo } from '../logo/index';
 import { Search } from '../search-form/index';
 import './styles.css';
+import api from '../../utils/api';
 
 
 export function App() {
@@ -14,6 +15,7 @@ export function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [cards, setCards] = useState(dataCard);
   const [isTyping, setIsTyping] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   function handleFormSubmit(e) {
     e.preventDefault();
@@ -39,6 +41,11 @@ export function App() {
 
   }, [searchQuery]);
 
+  useEffect(() => {
+    api.getUserInfo().then((userInfoData) => {
+      setCurrentUser(userInfoData);
+    }).catch(err => console.log(err));
+  }, []);
 
   function handleRequest() {
     const filterCards = dataCard.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -47,7 +54,7 @@ export function App() {
 
   return (
     <>
-      <Header>
+      <Header user={currentUser}>
         <Logo />
         <Search
           handleInputChange={handleInputChange}

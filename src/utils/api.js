@@ -22,6 +22,16 @@ class Api {
             .then(this.#onResponse)
     }
 
+    getProductsList() {
+        return fetch(this.#getApiUrl('/products'), {
+            headers: this.#headers
+        })
+            .then(this.#onResponse)
+    }
+
+    getAllInfo() {
+        return Promise.all([this.getProductsList(), this.getUserInfo()])
+    }
 
 }
 

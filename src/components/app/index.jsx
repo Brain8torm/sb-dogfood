@@ -3,7 +3,7 @@ import { Header } from '../header';
 import { CardList } from '../card-list';
 import { Sort } from '../sort';
 import { useEffect, useState } from 'react';
-import { dataCard } from '../../data';
+//import { dataCard } from '../../data';
 import { Logo } from '../logo/index';
 import { Search } from '../search-form/index';
 import './styles.css';
@@ -13,7 +13,7 @@ import api from '../../utils/api';
 export function App() {
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [cards, setCards] = useState(dataCard);
+  const [cards, setCards] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -42,13 +42,16 @@ export function App() {
   }, [searchQuery]);
 
   useEffect(() => {
-    api.getUserInfo().then((userInfoData) => {
-      setCurrentUser(userInfoData);
-    }).catch(err => console.log(err));
+    api.getAllInfo()
+      .then(([productsData, userInfoData]) => {
+        setCurrentUser(userInfoData);
+        setCards(productsData.products);
+      })
+      .catch(err => console.log(err))
   }, []);
 
   function handleRequest() {
-    const filterCards = dataCard.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    const filterCards = cards.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
     setCards(filterCards);
   }
 

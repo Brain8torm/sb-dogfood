@@ -29,6 +29,7 @@ export function App() {
 
   function handleSearchEscClick(e) {
     if (isTyping) {
+      console.log('esc click');
       e.closest('form').querySelector('input[type="text"]').value = '';
       setSearchQuery('');
       setIsTyping(false);
@@ -51,8 +52,9 @@ export function App() {
   }, []);
 
   function handleRequest() {
-    const filterCards = cards.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
-    setCards(filterCards);
+    api.search(searchQuery).then((dataSearch) => {
+      setCards(dataSearch);
+    });
   }
 
   return (

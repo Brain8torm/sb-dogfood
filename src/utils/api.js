@@ -36,6 +36,21 @@ class Api {
       headers: this.#headers,
     }).then(this.#onResponse);
   }
+
+  setUserInfo({ name, about }) {
+    return fetch(this.#getApiUrl('/users/me'), {
+      method: 'PATCH',
+      headers: this.#headers,
+      body: JSON.stringify({ name, about }),
+    }).then(this.#onResponse);
+  }
+
+  changeLikeProductStatus(productID, like) {
+    return fetch(this.#getApiUrl(`/products/likes/${productID}`), {
+      method: like ? 'DELETE' : 'PUT',
+      headers: this.#headers,
+    }).then(this.#onResponse);
+  }
 }
 
 const api = new Api({

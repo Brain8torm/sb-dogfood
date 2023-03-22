@@ -3,6 +3,7 @@ import styles from './card.module.css';
 import classNames from 'classnames';
 
 
+
 export function Card({ name, price, discount, wight, description, pictures }) {
 
   const discount_price = Math.round(price - (price * discount) / 100);

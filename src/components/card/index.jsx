@@ -3,7 +3,7 @@ import styles from './card.module.css';
 import classNames from 'classnames';
 
 
-export function Card({ name, price, discount, wight, description, picture }) {
+export function Card({ name, price, discount, wight, description, pictures }) {
 
   const discount_price = Math.round(price - (price * discount) / 100);
 
@@ -21,7 +21,7 @@ export function Card({ name, price, discount, wight, description, picture }) {
         </button>
       </div>
       <a href="/" className={classNames(styles.link)}>
-        <img src={picture} alt={name} className={classNames(styles.image)} sizes="
+        <img src={pictures} alt={name} className={classNames(styles.image)} sizes="
     (max-width: 500px) calc(100vw - 2rem), 
     (max-width: 700px) calc(100vw - 6rem),
     calc(100vw - 9rem - 200px)

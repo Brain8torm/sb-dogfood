@@ -28,7 +28,6 @@ export function App() {
 
   function handleSearchEscClick(e) {
     if (isTyping) {
-      console.log('esc click');
       e.closest('form').querySelector('input[type="text"]').value = '';
       setSearchQuery('');
       setIsTyping(false);

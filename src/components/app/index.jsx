@@ -1,17 +1,16 @@
+import { useEffect, useState } from 'react';
+import './styles.css';
 import { Footer } from '../footer';
 import { Header } from '../header';
 import { CardList } from '../card-list';
 import { Sort } from '../sort';
-import { useEffect, useState } from 'react';
-//import { dataCard } from '../../data';
 import { Logo } from '../logo/index';
 import { Search } from '../search-form/index';
-import './styles.css';
+import { isLiked } from '../../utils/products';
 import api from '../../utils/api';
 
 
 export function App() {
-
   const [searchQuery, setSearchQuery] = useState('');
   const [cards, setCards] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
@@ -42,6 +41,33 @@ export function App() {
 
   }, [searchQuery]);
 
+
+
+  function handleRequest() {
+    api.search(searchQuery).then((dataSearch) => {
+      setCards(dataSearch);
+    });
+  }
+
+  function handleUserUpdate(dataUserUpdate) {
+    api.setUserInfo(dataUserUpdate)
+      .then((updateUserFromServer) => {
+        setCurrentUser(updateUserFromServer)
+      })
+  }
+
+  function handleProductLike(product) {
+    const like = isLiked(product.likes, currentUser._id)
+    api.changeLikeProductStatus(product._id, like)
+      .then((updateCard) => {
+        const newProducts = cards.map(cardState => {
+          return cardState._id === updateCard._id ? updateCard : cardState
+        })
+
+        setCards(newProducts)
+      })
+  }
+
   useEffect(() => {
     api.getAllInfo()
       .then(([productsData, userInfoData]) => {
@@ -51,15 +77,9 @@ export function App() {
       .catch(err => console.log(err))
   }, []);
 
-  function handleRequest() {
-    api.search(searchQuery).then((dataSearch) => {
-      setCards(dataSearch);
-    });
-  }
-
   return (
     <>
-      <Header user={currentUser}>
+      <Header user={currentUser} onUserUpdate={handleUserUpdate}>
         <Logo />
         <Search
           handleInputChange={handleInputChange}
@@ -70,7 +90,7 @@ export function App() {
       </Header>
       <main className='content container'>
         <Sort />
-        <CardList goods={cards} />
+        <CardList goods={cards} onProductLike={handleProductLike} currentUser={currentUser} />
       </main>
       <Footer />
     </>

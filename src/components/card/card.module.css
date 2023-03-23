@@ -99,6 +99,24 @@
 	display: flex;
 }
 
+.favorite svg {
+	fill: #FFFFFF;
+}
+
+.favorite svg path:first-child {
+	fill: #7b8e98;
+	transition: fill .4s ease;
+}
+
+.favorite__is_active svg {
+	fill: #F44336;
+}
+
+.favorite__is_active svg path:first-child {
+	fill: #F44336;
+}
+
+
 .cart {
 	margin-top: auto;
 }

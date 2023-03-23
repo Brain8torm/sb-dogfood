@@ -1,5 +1,8 @@
 import styles from './header.module.css';
 import classNames from 'classnames';
+import { ReactComponent as FavoriteIcon } from './images/ic-favorites.svg';
+import { ReactComponent as CartIcon } from './images/ic-cart.svg';
+import { ReactComponent as ProfileIcon } from './images/ic-profile.svg';
 
 export function Header({ children, user, onUserUpdate }) {
 
@@ -11,11 +14,22 @@ export function Header({ children, user, onUserUpdate }) {
     <header className={classNames(styles.section)}>
       <div className={classNames(styles.wrapper, 'container')}>
         {children}
-        {/*<span>{user?.name}: {user?.about}</span>
-        <span>{user?.email}</span>
-        <button onClick={handleEditBtnClick}>
-          Изменить
-  </button>*/}
+        <div className={classNames(styles.icons)}>
+          <span className={classNames(styles.icon, 'header_icon__favorite')}><FavoriteIcon /></span>
+          <span className={classNames(styles.icon, 'header_icon__cart')}><CartIcon /></span>
+          <span className={classNames(styles.icon, 'header_icon__profile', 'dropdown-toggle')}>
+            <ProfileIcon />
+            <div className={classNames(styles.dropdown, 'dropdown')}>
+              <div>{user?.name}</div>
+              <div>{user?.about}</div>
+              <div>{user?.email}</div>
+              <button onClick={handleEditBtnClick}>
+                Изменить
+              </button>
+            </div>
+          </span>
+        </div>
+
       </div>
     </header>
   )

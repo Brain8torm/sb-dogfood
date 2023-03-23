@@ -1,19 +1,20 @@
+import { useEffect, useState } from 'react';
+import './styles.css';
 import { Footer } from '../footer';
 import { Header } from '../header';
 import { CardList } from '../card-list';
 import { Sort } from '../sort';
-import { useEffect, useState } from 'react';
-import { dataCard } from '../../data';
 import { Logo } from '../logo/index';
 import { Search } from '../search-form/index';
-import './styles.css';
+import { isLiked } from '../../utils/products';
+import api from '../../utils/api';
 
 
 export function App() {
-
   const [searchQuery, setSearchQuery] = useState('');
-  const [cards, setCards] = useState(dataCard);
+  const [cards, setCards] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
 
   function handleFormSubmit(e) {
     e.preventDefault();
@@ -27,6 +28,7 @@ export function App() {
 
   function handleSearchEscClick(e) {
     if (isTyping) {
+      console.log('esc click');
       e.closest('form').querySelector('input[type="text"]').value = '';
       setSearchQuery('');
       setIsTyping(false);
@@ -40,14 +42,44 @@ export function App() {
   }, [searchQuery]);
 
 
+
   function handleRequest() {
-    const filterCards = dataCard.filter((item) => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
-    setCards(filterCards);
+    api.search(searchQuery).then((dataSearch) => {
+      setCards(dataSearch);
+    });
   }
+
+  function handleUserUpdate(dataUserUpdate) {
+    api.setUserInfo(dataUserUpdate)
+      .then((updateUserFromServer) => {
+        setCurrentUser(updateUserFromServer)
+      })
+  }
+
+  function handleProductLike(product) {
+    const like = isLiked(product.likes, currentUser._id)
+    api.changeLikeProductStatus(product._id, like)
+      .then((updateCard) => {
+        const newProducts = cards.map(cardState => {
+          return cardState._id === updateCard._id ? updateCard : cardState
+        })
+
+        setCards(newProducts)
+      })
+  }
+
+  useEffect(() => {
+    api.getAllInfo()
+      .then(([productsData, userInfoData]) => {
+        setCurrentUser(userInfoData);
+        setCards(productsData.products);
+      })
+      .catch(err => console.log(err))
+  }, []);
 
   return (
     <>
-      <Header>
+      <Header user={currentUser} onUserUpdate={handleUserUpdate}>
         <Logo />
         <Search
           handleInputChange={handleInputChange}
@@ -58,7 +90,7 @@ export function App() {
       </Header>
       <main className='content container'>
         <Sort />
-        <CardList goods={cards} />
+        <CardList goods={cards} onProductLike={handleProductLike} currentUser={currentUser} />
       </main>
       <Footer />
     </>

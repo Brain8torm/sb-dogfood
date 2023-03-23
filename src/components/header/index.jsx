@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { ReactComponent as FavoriteIcon } from './images/ic-favorites.svg';
 import { ReactComponent as CartIcon } from './images/ic-cart.svg';
 import { ReactComponent as ProfileIcon } from './images/ic-profile.svg';
+import { Button } from '../button';
 
 export function Header({ children, user, onUserUpdate }) {
 
@@ -23,9 +24,9 @@ export function Header({ children, user, onUserUpdate }) {
               <div>{user?.name}</div>
               <div>{user?.about}</div>
               <div>{user?.email}</div>
-              <button onClick={handleEditBtnClick}>
+              <Button action={handleEditBtnClick}>
                 Изменить
-              </button>
+              </Button>
             </div>
           </span>
         </div>

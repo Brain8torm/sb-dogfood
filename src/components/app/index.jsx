@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import './styles.css';
 import { Footer } from '../footer';
 import { Header } from '../header';
-import { CardList } from '../card-list';
-import { Sort } from '../sort';
 import { Logo } from '../logo/index';
 import { Search } from '../search-form/index';
 import { isLiked } from '../../utils/products';
 import api from '../../utils/api';
+import { CatalogPage } from '../../pages/catalog-page';
 
 
 export function App() {
@@ -88,8 +87,7 @@ export function App() {
         />
       </Header>
       <main className='content container'>
-        <Sort />
-        <CardList goods={cards} onProductLike={handleProductLike} currentUser={currentUser} />
+        <CatalogPage cards={cards} handleProductLike={handleProductLike} currentUser={currentUser}/>
       </main>
       <Footer />
     </>

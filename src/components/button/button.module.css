@@ -29,3 +29,8 @@
 .button_type_secondary:hover {
   border-color: #7b8e98;
 }
+
+.button_style_wide {
+  padding-left: 65px;
+  padding-right: 65px;
+}

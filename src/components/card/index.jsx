@@ -1,7 +1,7 @@
 import { ReactComponent as LikeIcon } from './images/save.svg';
 import styles from './card.module.css';
 import classNames from 'classnames';
-import { isLiked } from '../../utils/products';
+import { calcDiscountPrice, isLiked } from '../../utils/products';
 
 
 export function Card({
@@ -19,7 +19,7 @@ export function Card({
   ...props
 }) {
 
-  const discount_price = Math.round(price - (price * discount) / 100);
+  const discount_price = calcDiscountPrice(price, discount);
   const like = currentUser && isLiked(likes, currentUser._id);
 
 

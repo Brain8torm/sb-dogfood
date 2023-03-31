@@ -7,6 +7,7 @@ import { Search } from '../search-form/index';
 import { isLiked } from '../../utils/products';
 import api from '../../utils/api';
 import { CatalogPage } from '../../pages/catalog-page';
+import { ProductPage } from '../../pages/product-page';
 
 
 export function App() {
@@ -87,6 +88,7 @@ export function App() {
         />
       </Header>
       <main className='content container'>
+        <ProductPage/>
         <CatalogPage cards={cards} handleProductLike={handleProductLike} currentUser={currentUser}/>
       </main>
       <Footer />

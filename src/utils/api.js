@@ -51,6 +51,16 @@ class Api {
       headers: this.#headers,
     }).then(this.#onResponse);
   }
+
+  getProductById(idProduct) {
+    return fetch(this.#getApiUrl(`/products/${idProduct}`), {
+      headers: this.#headers
+    }).then(this.#onResponse);
+  }
+
+  getInfoProduct(idProduct) {
+    return Promise.all([this.getProductById(idProduct), this.getUserInfo()]);
+  }
 }
 
 const api = new Api({

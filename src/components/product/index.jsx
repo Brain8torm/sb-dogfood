@@ -25,7 +25,7 @@ function Product({
     }
 
     return (
-        <>
+        <div className='product'>
             <div className={classNames(styles.header)}>
                 <a href="#" className={classNames(styles.button_back)}>Назад</a>
                 <h1 className={classNames(styles.productTitle)}>{name}</h1>
@@ -39,7 +39,7 @@ function Product({
                     {discount !== 0 ? (
                         <>
                             <span className={classNames(styles.old_price)}>{price}&nbsp;₽</span>
-                            <span className={classNames(styles.price, styles.price_type_discount)}>{discount_price}</span>
+                            <span className={classNames(styles.price, styles.price_discount)}>{discount_price}</span>
                         </>
                     ) : (
                         <span className={classNames(styles.price)}>{price}&nbsp;₽</span>
@@ -115,7 +115,7 @@ function Product({
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

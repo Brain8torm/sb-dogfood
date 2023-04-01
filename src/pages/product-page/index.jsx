@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import api from '../../utils/api';
-import style from './product-page.module.css';
+import styles from './product-page.module.css';
 import Product from '../../components/product';
+import { Spinner } from '../../components/spinner';
+
 
 const ID_PRODUCT = '622c77e877d63f6e70967d22';
 
@@ -10,7 +12,7 @@ export const ProductPage = () => {
 
     const [product, setProduct] = useState({});
     const [currentUser, setCurrentUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsLoading(true);
@@ -28,8 +30,11 @@ export const ProductPage = () => {
     }, []);
     
     return (
-        <>
-           <Product {...product} />
-        </>
+        <div className={styles.wrapper}>
+            {isLoading
+            ? <Spinner />
+            : <Product {...product} />
+            }
+        </div>
     );
 }

@@ -15,6 +15,7 @@ export function App() {
   const [cards, setCards] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleFormSubmit(e) {
     e.preventDefault();
@@ -68,12 +69,16 @@ export function App() {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     api.getAllInfo()
       .then(([productsData, userInfoData]) => {
         setCurrentUser(userInfoData);
         setCards(productsData.products);
       })
       .catch(err => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   return (
@@ -88,8 +93,8 @@ export function App() {
         />
       </Header>
       <main className='content container'>
-        <ProductPage/>
-        <CatalogPage cards={cards} handleProductLike={handleProductLike} currentUser={currentUser}/>
+        <ProductPage />
+        <CatalogPage cards={cards} handleProductLike={handleProductLike} currentUser={currentUser} isLoading={isLoading} />
       </main>
       <Footer />
     </>

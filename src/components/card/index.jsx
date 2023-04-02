@@ -2,6 +2,7 @@ import { ReactComponent as LikeIcon } from './images/save.svg';
 import styles from './card.module.css';
 import classNames from 'classnames';
 import { calcDiscountPrice, isLiked } from '../../utils/products';
+import { Link } from 'react-router-dom';
 
 
 export function Card({
@@ -39,7 +40,8 @@ export function Card({
           <LikeIcon className={classNames(styles.icon)} />
         </button>
       </div>
-      <a href="/" className={classNames(styles.link)}>
+
+      <Link to={`/product/${_id}`} className={classNames(styles.link)}>
         <img src={pictures} alt={name} className={classNames(styles.image)} sizes="
     (max-width: 500px) calc(100vw - 2rem), 
     (max-width: 700px) calc(100vw - 6rem),
@@ -57,7 +59,7 @@ export function Card({
           <span className={classNames(styles.wight)}>{wight}</span>
           <h3 className={classNames(styles.name)}>{name}</h3>
         </div>
-      </a>
+      </Link>
       <a href="#" className={classNames(styles.cart, styles.btn, styles.btn_type_primary)}>В корзину</a>
     </article >
   )

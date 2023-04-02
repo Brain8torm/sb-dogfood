@@ -1,8 +1,19 @@
-@import "~normalize.css";
-@import "~@fontsource/nunito";
+@import '~normalize.css';
+@import '~@fontsource/nunito';
 
 body {
-  font-family: "Nunito", "Arial", "Helvetica", sans-serif;
+  font-family: 'Nunito', 'Arial', 'Helvetica', sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .container {
@@ -19,6 +30,7 @@ img {
 
 .content {
   padding: 20px 0;
+  flex: 1;
 }
 
 .content__sort {

@@ -30,25 +30,30 @@ function Product({
     return (
         <div className='product'>
             <div className={classNames(styles.header)}>
-                <a href="#" className={classNames(styles.button_back)} onClick={() => navigate(-1)}>Назад</a>
-                <h1 className={classNames(styles.productTitle)}>{name}</h1>
-                <p className={classNames(styles.articul)}>Аартикул: <b>2388907</b></p>
+                <a href="#" className={classNames(styles.button_back)} onClick={() => navigate(-1)}>&lt; Назад</a>
+                <h1 className={classNames(styles.title)}>{name}</h1>
+                <p className={classNames(styles.articul)}>Артикул: <b>2388907</b></p>
             </div>
             <div className={classNames(styles.product)}>
-                <div className={classNames(styles.imgWrapper)}>
+                <div className={classNames(styles.img_wrapper)}>
+                <div className={classNames(styles.sticky, styles.sticky__type_top_left)}>
+        {discount > 0 &&
+          <span className={classNames(styles.discount)}>{` -${discount}%`}</span>
+        }
+      </div>
                     <img src={pictures} alt={name} />
                 </div>
                 <div className={classNames(styles.desc)}>
                     {discount !== 0 ? (
                         <>
                             <span className={classNames(styles.old_price)}>{price}&nbsp;₽</span>
-                            <span className={classNames(styles.price, styles.price_discount)}>{discount_price}</span>
+                            <span className={classNames(styles.price, styles.price_discount)}>{discount_price}&nbsp;₽</span>
                         </>
                     ) : (
                         <span className={classNames(styles.price)}>{price}&nbsp;₽</span>
                     )}
 
-                    <div className={classNames(styles.btnWrap)}>
+                    <div className={classNames(styles.btn_wrap)}>
                         <div className={classNames(styles.left)}>
                             <button className={classNames(styles.minus)}>-</button>
                             <span className={classNames(styles.num)}>0</span>
@@ -57,8 +62,8 @@ function Product({
                         <Button href="#" type="primary" style="wide" >В корзину</Button>
 
                     </div>
-                    <div className={classNames(styles.btnWrap)}>
-                        <button className={classNames(styles.favorite, { [styles.favoriteActive]: like })} onClick={handleLikeClick}>
+                    <div className={classNames(styles.btn_wrap)}>
+                        <button className={classNames(styles.favorite, { [styles.favorite_active]: like })} onClick={handleLikeClick}>
                             <LikeIcon />
                             {like ? 'В избранном' : 'В избранное'}
                         </button>

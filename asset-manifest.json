@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/sb-dogfood/static/css/main.f0e01606.css",
+    "main.js": "/sb-dogfood/static/js/main.c42b30dd.js",
+    "static/media/nunito-all-400-normal.woff": "/sb-dogfood/static/media/nunito-all-400-normal.0c07f750f73ac5437580.woff",
+    "static/media/nunito-latin-400-normal.woff2": "/sb-dogfood/static/media/nunito-latin-400-normal.b8644b6e04ecda1cf98b.woff2",
+    "static/media/nunito-latin-ext-400-normal.woff2": "/sb-dogfood/static/media/nunito-latin-ext-400-normal.e8049e65c49ce687cff1.woff2",
+    "static/media/nunito-cyrillic-ext-400-normal.woff2": "/sb-dogfood/static/media/nunito-cyrillic-ext-400-normal.f21ac09511c6fa4f9463.woff2",
+    "static/media/logo.svg": "/sb-dogfood/static/media/logo.a3bf4d09ba121101955f333a950baa43.svg",
+    "static/media/nunito-cyrillic-400-normal.woff2": "/sb-dogfood/static/media/nunito-cyrillic-400-normal.166e8e87ae0b6f3deed3.woff2",
+    "static/media/quality.svg": "/sb-dogfood/static/media/quality.7b9fd0f10f78b411180bbc38090dfc53.svg",
+    "static/media/nunito-vietnamese-400-normal.woff2": "/sb-dogfood/static/media/nunito-vietnamese-400-normal.6a8bc7acd205391fb71a.woff2",
+    "static/media/logo-mobile.svg": "/sb-dogfood/static/media/logo-mobile.f361846a73776935a81c6df7d1440bfe.svg",
+    "static/media/ic-profile.svg": "/sb-dogfood/static/media/ic-profile.ddf80a483ea2a2950edabf5c61d4db0a.svg",
+    "static/media/ic-notfound.svg": "/sb-dogfood/static/media/ic-notfound.d026fd15799f3faa1b0dbc24fd5a8b96.svg",
+    "static/media/save.svg": "/sb-dogfood/static/media/save.1cebf969ae040e6630f7d45c96ee4a31.svg",
+    "static/media/truck.svg": "/sb-dogfood/static/media/truck.00c48913b07d95788dbad6dc47399667.svg",
+    "static/media/ic-close-input.svg": "/sb-dogfood/static/media/ic-close-input.f01e03cf609912dcdf78b1a91e354837.svg",
+    "static/media/ic-favorites.svg": "/sb-dogfood/static/media/ic-favorites.a8555901a1eb6898037731b123c8c740.svg",
+    "static/media/ic-cart.svg": "/sb-dogfood/static/media/ic-cart.360dc3a446a9e8407916de0f843fec13.svg",
+    "static/media/ic-search.svg": "/sb-dogfood/static/media/ic-search.296528dfccff6373f75e8f75d02e833a.svg",
+    "index.html": "/sb-dogfood/index.html",
+    "main.f0e01606.css.map": "/sb-dogfood/static/css/main.f0e01606.css.map",
+    "main.c42b30dd.js.map": "/sb-dogfood/static/js/main.c42b30dd.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f0e01606.css",
+    "static/js/main.c42b30dd.js"
+  ]
+}

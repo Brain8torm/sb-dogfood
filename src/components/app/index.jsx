@@ -23,7 +23,7 @@ export function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   
-  
+  const debounceSearchQuery = useDebounce(searchQuery, 300);
 
   function handleFormSubmit(e) {
     e.preventDefault();
@@ -47,11 +47,9 @@ export function App() {
   useEffect(() => {
     handleRequest();
 
-  }, [searchQuery]);
+  }, [debounceSearchQuery]);
 
-  const debounceSearchQuery = useDebounce(searchQuery, 300);
-
-  console.log(debounceSearchQuery);
+  
 
   function handleRequest() {
     api.search(debounceSearchQuery).then((dataSearch) => {
@@ -106,6 +104,7 @@ export function App() {
                     handleInputChange={handleInputChange}
                     handleFormSubmit={handleFormSubmit}
                     handleSearchEscClick={handleSearchEscClick}
+                    searchQuery={debounceSearchQuery}
                   />
                 </>
               } />

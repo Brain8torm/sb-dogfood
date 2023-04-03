@@ -3,7 +3,7 @@ import { Sort } from '../../components/sort';
 import { Spinner } from '../../components/spinner';
 import styles from './catalog-page.module.css';
 
-export const CatalogPage = ({ cards, handleProductLike, currentUser, isLoading }) => {
+export const CatalogPage = ({ isLoading }) => {
     return (
         <>
 
@@ -11,7 +11,7 @@ export const CatalogPage = ({ cards, handleProductLike, currentUser, isLoading }
                 ? <Spinner />
                 : <>
                     <Sort />
-                    <CardList goods={cards} onProductLike={handleProductLike} currentUser={currentUser} />
+                    <CardList />
                 </>
             }
 

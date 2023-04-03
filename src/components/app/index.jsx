@@ -11,14 +11,19 @@ import { ProductPage } from '../../pages/product-page';
 import FaqPage from '../../pages/faq-page';
 import { Route, Routes } from 'react-router';
 import { NotFoundPage } from '../../pages/not-fond-page';
+import { UserContext } from '../../contexts/current-user-context';
+import { CardsContext } from '../../contexts/cards-context';
+import { useDebounce } from '../../hooks';
 
 
 export function App() {
-  const [searchQuery, setSearchQuery] = useState('');
   const [cards, setCards] = useState([]);
-  const [isTyping, setIsTyping] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  
+  
 
   function handleFormSubmit(e) {
     e.preventDefault();
@@ -44,10 +49,12 @@ export function App() {
 
   }, [searchQuery]);
 
+  const debounceSearchQuery = useDebounce(searchQuery, 300);
 
+  console.log(debounceSearchQuery);
 
   function handleRequest() {
-    api.search(searchQuery).then((dataSearch) => {
+    api.search(debounceSearchQuery).then((dataSearch) => {
       setCards(dataSearch);
     });
   }
@@ -61,13 +68,15 @@ export function App() {
 
   function handleProductLike(product) {
     const like = isLiked(product.likes, currentUser._id)
-    api.changeLikeProductStatus(product._id, like)
+    return api.changeLikeProductStatus(product._id, like)
       .then((updateCard) => {
         const newProducts = cards.map(cardState => {
           return cardState._id === updateCard._id ? updateCard : cardState
         })
 
-        setCards(newProducts)
+        setCards(newProducts);
+
+        return updateCard;
       })
   }
 
@@ -86,33 +95,37 @@ export function App() {
 
   return (
     <>
-      <Header user={currentUser} onUserUpdate={handleUserUpdate}>
-        <Routes>
-          <Route path='/' element={
-            <>
-              <Logo />
-              <Search
-                handleInputChange={handleInputChange}
-                handleFormSubmit={handleFormSubmit}
-                handleSearchEscClick={handleSearchEscClick}
-                searchQuery={searchQuery}
-              />
-            </>
-          } />
-          <Route path='*' element={<Logo href='/' />} />
-        </Routes>
-      </Header>
-      <main className='content container'>
-        <Routes>
-          <Route path='/' element={<CatalogPage cards={cards} handleProductLike={handleProductLike} currentUser={currentUser} isLoading={isLoading} />} />
-          <Route path='/faq' element={<FaqPage />} />
-          <Route path='/product/:productID' element={<ProductPage />} />
-          <Route path='*' element={<NotFoundPage />} />
-        </Routes>
+      <CardsContext.Provider value={{ cards, handleLike: handleProductLike }} >
+        <UserContext.Provider value={{ currentUser, onUserUpdate: handleUserUpdate }}>
+          <Header user={currentUser}>
+            <Routes>
+              <Route path='/' element={
+                <>
+                  <Logo />
+                  <Search
+                    handleInputChange={handleInputChange}
+                    handleFormSubmit={handleFormSubmit}
+                    handleSearchEscClick={handleSearchEscClick}
+                  />
+                </>
+              } />
+              <Route path='*' element={<Logo href='/' />} />
+            </Routes>
+          </Header>
 
-        
-      </main>
-      <Footer />
+          <main className='content container'>
+            <Routes>
+              <Route path='/' element={<CatalogPage handleProductLike={handleProductLike} currentUser={currentUser} isLoading={isLoading} />} />
+              <Route path='/faq' element={<FaqPage />} />
+              <Route path='/product/:productID' element={<ProductPage />} />
+              <Route path='*' element={<NotFoundPage />} />
+            </Routes>
+
+
+          </main>
+          <Footer />
+        </UserContext.Provider>
+      </CardsContext.Provider>
     </>
   )
 }

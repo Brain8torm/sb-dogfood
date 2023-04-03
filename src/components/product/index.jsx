@@ -8,20 +8,25 @@ import { Button } from '../button';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function Product({
+    _id,
     name,
     pictures,
     price,
     discount,
     description,
-    likes,
+    likes = [],
     currentUser,
-    handleLikeClick
+    onProductLike
 }) {
     const navigate = useNavigate();
     const location = useLocation();
 
     const discount_price = calcDiscountPrice(price, discount);
-    const like = currentUser && isLiked(likes, currentUser._id);
+    const like = isLiked(likes, currentUser?._id);
+
+    function handleLikeClick() {
+        onProductLike({ likes, _id })
+    }
 
     function createMarkupDescription() {
         return { __html: description };

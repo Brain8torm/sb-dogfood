@@ -3,6 +3,9 @@ import styles from './card.module.css';
 import classNames from 'classnames';
 import { calcDiscountPrice, isLiked } from '../../utils/products';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../../contexts/current-user-context';
+import { CardsContext } from '../../contexts/cards-context';
 
 
 export function Card({
@@ -14,15 +17,14 @@ export function Card({
   pictures,
   tags,
   likes,
-  onProductLike,
   _id,
-  currentUser,
   ...props
 }) {
-
+  const { currentUser } = useContext(UserContext);
+  const { handleLike: onProductLike } = useContext(CardsContext);
   const discount_price = calcDiscountPrice(price, discount);
   const like = currentUser && isLiked(likes, currentUser._id);
-
+  
 
   function handleLikeButtonClick() {
     onProductLike({ likes, _id })

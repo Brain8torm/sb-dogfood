@@ -4,9 +4,11 @@ import { ReactComponent as FavoriteIcon } from './images/ic-favorites.svg';
 import { ReactComponent as CartIcon } from './images/ic-cart.svg';
 import { ReactComponent as ProfileIcon } from './images/ic-profile.svg';
 import { Button } from '../button';
+import { useContext } from 'react';
+import { UserContext } from '../../contexts/current-user-context';
 
-export function Header({ children, user, onUserUpdate }) {
-
+export function Header({ children }) {
+  const { currentUser, onUserUpdate } = useContext(UserContext);
   const handleEditBtnClick = () => {
     onUserUpdate({ name: 'Андрей Кудряшов', about: 'Веб-разработчик' })
   }
@@ -21,9 +23,9 @@ export function Header({ children, user, onUserUpdate }) {
           <span className={classNames(styles.icon, 'header_icon__profile', 'dropdown-toggle')}>
             <ProfileIcon />
             <div className={classNames(styles.dropdown, 'dropdown')}>
-              <div>{user?.name}</div>
-              <div>{user?.about}</div>
-              <div>{user?.email}</div>
+              <div>{currentUser?.name}</div>
+              <div>{currentUser?.about}</div>
+              <div>{currentUser?.email}</div>
               <Button action={handleEditBtnClick}>
                 Изменить
               </Button>

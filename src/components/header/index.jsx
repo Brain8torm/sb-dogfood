@@ -10,7 +10,7 @@ import { UserContext } from '../../contexts/current-user-context';
 export function Header({ children }) {
   const { currentUser, onUserUpdate } = useContext(UserContext);
   const handleEditBtnClick = () => {
-    onUserUpdate({ name: 'Андрей Кудряшов', about: 'Веб-разработчик' })
+    onUserUpdate({ name: 'Андрей Кудряшов2', about: 'Веб-разработчик' })
   }
 
   return (

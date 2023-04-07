@@ -95,7 +95,7 @@ export function App() {
     <>
       <CardsContext.Provider value={{ cards, handleLike: handleProductLike }} >
         <UserContext.Provider value={{ currentUser, onUserUpdate: handleUserUpdate }}>
-          <Header user={currentUser}>
+          <Header>
             <Routes>
               <Route path='/' element={
                 <>
@@ -114,7 +114,7 @@ export function App() {
 
           <main className='content container'>
             <Routes>
-              <Route path='/' element={<CatalogPage handleProductLike={handleProductLike} currentUser={currentUser} isLoading={isLoading} />} />
+              <Route path='/' element={<CatalogPage isLoading={isLoading} />} />
               <Route path='/faq' element={<FaqPage />} />
               <Route path='/product/:productID' element={<ProductPage />} />
               <Route path='*' element={<NotFoundPage />} />

@@ -6,6 +6,8 @@ import truck from "./images/truck.svg";
 import quality from "./images/quality.svg";
 import { Button } from '../button';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserContext } from '../../contexts/current-user-context';
 
 function Product({
     _id,
@@ -15,9 +17,11 @@ function Product({
     discount,
     description,
     likes = [],
-    currentUser,
     onProductLike
 }) {
+
+    const { currentUser } = useContext(UserContext);
+
     const navigate = useNavigate();
     const location = useLocation();
 

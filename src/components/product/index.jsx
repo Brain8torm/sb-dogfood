@@ -8,6 +8,7 @@ import { Button } from '../button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/current-user-context';
+import { ContentHeader } from '../content-header';
 
 function Product({
     _id,
@@ -38,10 +39,11 @@ function Product({
 
     return (
         <div className='product'>
+            <ContentHeader title={name} textButton='Назад'>
+<p className={classNames(styles.articul)}>Артикул: <b>2388907</b></p>
+            </ContentHeader>
             <div className={classNames(styles.header)}>
-                <a href="#" className={classNames(styles.button_back)} onClick={() => navigate(-1)}>&lt; Назад</a>
-                <h1 className={classNames(styles.title)}>{name}</h1>
-                <p className={classNames(styles.articul)}>Артикул: <b>2388907</b></p>
+                
             </div>
             <div className={classNames(styles.product)}>
                 <div className={classNames(styles.img_wrapper)}>

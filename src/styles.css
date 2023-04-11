@@ -1,8 +1,8 @@
 @import '~normalize.css';
-@import '~@fontsource/nunito';
 
 body {
   font-family: 'Nunito', 'Arial', 'Helvetica', sans-serif;
+  color: #1a1a1a;
 }
 
 html,

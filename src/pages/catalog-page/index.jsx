@@ -6,22 +6,15 @@ import { CardsContext } from '../../contexts/cards-context';
 import styles from './catalog-page.module.css';
 import { ContentHeader } from '../../components/content-header';
 
-export const CatalogPage = ({ isLoading }) => {
+export const CatalogPage = () => {
 
     const { cards: goods } = useContext(CardsContext);
 
     return (
         <>
-
-            {isLoading
-                ? <Spinner />
-                : <>
-                    <ContentHeader title='Главная' textButton='Главная' to='/' />
-                    <Sort />
-                    <CardList goods={goods} />
-                </>
-            }
-
+            <ContentHeader title='Главная' textButton='Главная' to='/' />
+            <Sort />
+            <CardList goods={goods} />
         </>
 
     );

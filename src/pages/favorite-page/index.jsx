@@ -5,21 +5,13 @@ import { CardsContext } from '../../contexts/cards-context';
 import styles from './favorite-page.module.css';
 import { ContentHeader } from '../../components/content-header';
 
-export const FavoritePage = ({ isLoading }) => {
+export const FavoritePage = () => {
 
     const { favorites: goods } = useContext(CardsContext);
     return (
         <>
-
-            {isLoading
-                ? <Spinner />
-                : <>
-                    <ContentHeader title='Избранное' textButton='Назад' />
-                    <CardList goods={goods} />
-                </>
-            }
-
+            <ContentHeader title='Избранное' textButton='Назад' />
+            <CardList goods={goods} />
         </>
-
     );
 }

@@ -6,9 +6,14 @@ import { ReactComponent as ProfileIcon } from './images/ic-profile.svg';
 import { Button } from '../button';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/current-user-context';
+import { CardsContext } from '../../contexts/cards-context';
+import { Link } from 'react-router-dom';
 
 export function Header({ children }) {
   const { currentUser, onUserUpdate } = useContext(UserContext);
+  const { favorites } = useContext(CardsContext);
+
+
   const handleEditBtnClick = () => {
     onUserUpdate({ name: 'Андрей Кудряшов2', about: 'Веб-разработчик' })
   }
@@ -18,7 +23,12 @@ export function Header({ children }) {
       <div className={classNames(styles.wrapper, 'container')}>
         {children}
         <div className={classNames(styles.icons)}>
-          <span className={classNames(styles.icon, 'header_icon__favorite')}><FavoriteIcon /></span>
+          <Link to={{ pathname: '/favorite' }} className={classNames(styles.icon_link)}>
+            <span className={classNames(styles.icon, 'header_icon__favorite')}><FavoriteIcon /></span>
+            {favorites.length !== 0 &&
+              <span className={classNames(styles.icon_bubble)}>{favorites.length}</span>
+            }
+          </Link>
           <span className={classNames(styles.icon, 'header_icon__cart')}><CartIcon /></span>
           <span className={classNames(styles.icon, 'header_icon__profile', 'dropdown-toggle')}>
             <ProfileIcon />

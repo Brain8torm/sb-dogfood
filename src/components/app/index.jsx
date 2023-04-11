@@ -14,15 +14,17 @@ import { NotFoundPage } from '../../pages/not-fond-page';
 import { UserContext } from '../../contexts/current-user-context';
 import { CardsContext } from '../../contexts/cards-context';
 import { useDebounce } from '../../hooks';
+import { FavoritePage } from '../../pages/favorite-page';
 
 
 export function App() {
   const [cards, setCards] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
-  
+
   const debounceSearchQuery = useDebounce(searchQuery, 300);
 
   function handleFormSubmit(e) {
@@ -49,7 +51,7 @@ export function App() {
 
   }, [debounceSearchQuery]);
 
-  
+
 
   function handleRequest() {
     api.search(debounceSearchQuery).then((dataSearch) => {
@@ -74,6 +76,12 @@ export function App() {
 
         setCards(newProducts);
 
+        if (!like) {
+          setFavorites(prevState => [...prevState, updateCard])
+        } else {
+          setFavorites(prevState => prevState.filter(card => card._id !== updateCard._id))
+        }
+
         return updateCard;
       })
   }
@@ -84,6 +92,10 @@ export function App() {
       .then(([productsData, userInfoData]) => {
         setCurrentUser(userInfoData);
         setCards(productsData.products);
+
+        const favoriteProduct = productsData.products.filter(item => isLiked(item.likes, userInfoData._id));
+
+        setFavorites(favoriteProduct);
       })
       .catch(err => console.log(err))
       .finally(() => {
@@ -93,7 +105,7 @@ export function App() {
 
   return (
     <>
-      <CardsContext.Provider value={{ cards, handleLike: handleProductLike }} >
+      <CardsContext.Provider value={{ cards, favorites, handleLike: handleProductLike }} >
         <UserContext.Provider value={{ currentUser, onUserUpdate: handleUserUpdate }}>
           <Header>
             <Routes>
@@ -116,6 +128,7 @@ export function App() {
             <Routes>
               <Route path='/' element={<CatalogPage isLoading={isLoading} />} />
               <Route path='/faq' element={<FaqPage />} />
+              <Route path='/favorite' element={<FavoritePage />} />
               <Route path='/product/:productID' element={<ProductPage />} />
               <Route path='*' element={<NotFoundPage />} />
             </Routes>

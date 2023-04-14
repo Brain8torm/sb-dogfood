@@ -20,7 +20,7 @@ body {
   max-width: 1024px;
   padding-left: 16px;
   padding-right: 16px;
-  width: 100%;
+  width: calc(100% - 32px);
   margin: 0 auto;
 }
 

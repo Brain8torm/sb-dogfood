@@ -16,6 +16,7 @@ import { CardsContext } from '../../contexts/cards-context';
 import { useDebounce } from '../../hooks';
 import { FavoritePage } from '../../pages/favorite-page';
 import { SORT_TABS_ID } from '../../utils/config';
+import { MobileBar } from '../mobile-bar';
 
 
 export function App() {
@@ -155,6 +156,7 @@ export function App() {
 
           </main>
           <Footer />
+          <MobileBar/>
         </UserContext.Provider>
       </CardsContext.Provider>
     </>

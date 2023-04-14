@@ -15,6 +15,7 @@ import { UserContext } from '../../contexts/current-user-context';
 import { CardsContext } from '../../contexts/cards-context';
 import { useDebounce } from '../../hooks';
 import { FavoritePage } from '../../pages/favorite-page';
+import { SORT_TABS_ID } from '../../utils/config';
 
 
 export function App() {
@@ -24,6 +25,7 @@ export function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [currentSort, setCurrentSort] = useState('');
 
   const debounceSearchQuery = useDebounce(searchQuery, 300);
 
@@ -103,9 +105,26 @@ export function App() {
       });
   }, []);
 
+  function sortedData (currentSort) {
+    switch (currentSort) {
+      case (SORT_TABS_ID.CHEAP): setCards(cards.sort((a, b) => a.price - b.price)); break;
+      case (SORT_TABS_ID.LOW): setCards(cards.sort((a, b) => b.price - a.price)); break;
+      case (SORT_TABS_ID.DISCOUNT): setCards(cards.sort((a, b) => b.discount - a.discount)); break;
+      default: setCards(cards.sort((a, b) => b.price - a.price));
+    }
+  }
+
   return (
     <>
-      <CardsContext.Provider value={{ cards, favorites, handleLike: handleProductLike, isLoading }} >
+      <CardsContext.Provider value={{
+        cards,
+        favorites,
+        currentSort,
+        handleLike: handleProductLike,
+        isLoading,
+        onSortData: sortedData,
+        setCurrentSort
+      }} >
         <UserContext.Provider value={{ currentUser, onUserUpdate: handleUserUpdate }}>
           <Header>
             <Routes>

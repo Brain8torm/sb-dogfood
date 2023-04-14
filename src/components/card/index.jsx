@@ -60,7 +60,7 @@ export function Card({
             </div>
 
             <Link to={`/product/${_id}`} className={classNames(styles.link)}>
-              <img src={pictures} alt={name} className={classNames(styles.image)} sizes="
+              <img src={pictures} alt={name} className={classNames(styles.image)} loading="lazy" sizes="
       (max-width: 500px) calc(100vw - 2rem), 
       (max-width: 700px) calc(100vw - 6rem),
       calc(100vw - 9rem - 200px)

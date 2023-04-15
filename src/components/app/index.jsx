@@ -17,6 +17,7 @@ import { useDebounce } from '../../hooks';
 import { FavoritePage } from '../../pages/favorite-page';
 import { SORT_TABS_ID } from '../../utils/config';
 import { MobileBar } from '../mobile-bar';
+import { RegisterForm } from '../form/register-form';
 
 
 export function App() {
@@ -127,6 +128,7 @@ export function App() {
         setCurrentSort
       }} >
         <UserContext.Provider value={{ currentUser, onUserUpdate: handleUserUpdate }}>
+          <RegisterForm/>
           <Header>
             <Routes>
               <Route path='/' element={

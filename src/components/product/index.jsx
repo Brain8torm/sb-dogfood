@@ -6,9 +6,11 @@ import truck from "./images/truck.svg";
 import quality from "./images/quality.svg";
 import { Button } from '../button';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { UserContext } from '../../contexts/current-user-context';
 import { ContentHeader } from '../content-header';
+import { MAX_COUNT_RATING } from '../../utils/config';
+import { Rating } from '../rating';
 
 function Product({
     _id,
@@ -18,10 +20,12 @@ function Product({
     discount,
     description,
     likes = [],
+    reviews,
     onProductLike
 }) {
 
     const { currentUser } = useContext(UserContext);
+    const [currentRating, setCurrentRating] = useState(MAX_COUNT_RATING);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -40,7 +44,8 @@ function Product({
     return (
         <div className='product'>
             <ContentHeader title={name} textButton='Назад'>
-<p className={classNames(styles.articul)}>Артикул: <b>2388907</b></p>
+                <p className={classNames(styles.articul)}>Артикул: <b>2388907</b></p>
+                <Rating currentRating={currentRating} />
             </ContentHeader>
             <div className={classNames(styles.header)}>
                 

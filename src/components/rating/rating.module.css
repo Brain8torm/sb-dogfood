@@ -1,0 +1,19 @@
+.wrapper{
+
+}
+
+.star{
+
+}
+
+.star__icon {
+
+}
+
+.star__icon_filled {
+    fill: #FFAA0D;
+}
+
+.star__icon_editable {
+    cursor: pointer;
+}

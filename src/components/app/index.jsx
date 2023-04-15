@@ -18,6 +18,7 @@ import { FavoritePage } from '../../pages/favorite-page';
 import { SORT_TABS_ID } from '../../utils/config';
 import { MobileBar } from '../mobile-bar';
 import { RegisterForm } from '../form/register-form';
+import { Modal } from '../modal';
 
 
 export function App() {
@@ -28,6 +29,7 @@ export function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [currentSort, setCurrentSort] = useState('');
+  const [modalFormStatus, setModalFormStatus] = useState(true);
 
   const debounceSearchQuery = useDebounce(searchQuery, 300);
 
@@ -54,7 +56,6 @@ export function App() {
     handleRequest();
 
   }, [debounceSearchQuery]);
-
 
 
   function handleRequest() {
@@ -88,6 +89,10 @@ export function App() {
 
         return updateCard;
       })
+  }
+
+  const onCloseModalForm = () => {
+    setModalFormStatus(false)
   }
 
   useEffect(() => {
@@ -128,7 +133,10 @@ export function App() {
         setCurrentSort
       }} >
         <UserContext.Provider value={{ currentUser, onUserUpdate: handleUserUpdate }}>
-          <RegisterForm/>
+          <Modal isOpen={modalFormStatus} onClose={onCloseModalForm}>
+            <RegisterForm/>
+          </Modal>
+          
           <Header>
             <Routes>
               <Route path='/' element={

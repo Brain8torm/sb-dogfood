@@ -11,6 +11,7 @@ import { UserContext } from '../../contexts/current-user-context';
 import { ContentHeader } from '../content-header';
 import { MAX_COUNT_RATING } from '../../utils/config';
 import { Rating } from '../rating';
+import { FormReview } from '../form-review';
 
 function Product({
     _id,
@@ -42,6 +43,7 @@ function Product({
     }
 
     return (
+        <>
         <div className='product'>
             <ContentHeader title={name} textButton='Назад'>
                 <p className={classNames(styles.articul)}>Артикул: <b>2388907</b></p>
@@ -140,6 +142,9 @@ function Product({
                 </div>
             </div>
         </div>
+
+        <FormReview title={`Отзыв о товаре ${name}`} />
+        </>
     );
 }
 

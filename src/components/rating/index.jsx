@@ -12,10 +12,10 @@ export function Rating({ isEditable = false, currentRating, setCurrentRating }) 
         const updateArray = ratingArray.map((ratingElement, index) => {
             return (
                 <StarIcon
-                    className={classNames(styles.star,
+                    className={classNames(styles.star__icon,
                         {
-                            [styles.filled]: index < filledRating,
-                            [styles.editable]: isEditable,
+                            [styles.star__icon_filled]: index < filledRating,
+                            [styles.star__icon_editable]: isEditable,
                         })}
                     onMouseEnter={() => changeDisplay(index + 1)}
                     onMouseLeave={() => changeDisplay(currentRating)}

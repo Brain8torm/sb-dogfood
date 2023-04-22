@@ -31,6 +31,10 @@
   cursor: pointer;
 }
 
+.icon svg {
+  pointer-events: none;
+}
+
 .icon_link {
   position: relative;
   display: block;
@@ -63,7 +67,7 @@
   box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
 }
 
-.dropdown {
+.dropdown__open {
   display: block;
   right: 0;
   top: 65px;

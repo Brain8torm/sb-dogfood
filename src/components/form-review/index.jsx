@@ -6,12 +6,13 @@ import classNames from 'classnames';
 import { Rating } from '../rating';
 import { useState } from 'react';
 import { MAX_COUNT_RATING } from '../../utils/config';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 
 export function FormReview({ title = 'Отзыв о товаре', productId, setProduct }) {
 
     const {
         register,
+        control,
         handleSubmit,
         formState: { errors },
         reset
@@ -34,11 +35,25 @@ export function FormReview({ title = 'Отзыв о товаре', productId, se
 
     return (
         <>
-            <h2>{title}</h2>
-            <Rating
-                currentRating={rating}
-                setCurrentRating={setRating}
-                isEditable />
+            <h3>{title}</h3>
+            <Controller
+                render={({ field }) => (
+                    <Rating
+                        currentRating={field.value}
+                        setCurrentRating={field.onChange}
+                        isEditable
+                        error={errors.rating}
+                    />
+                )}
+                name="rating"
+                control={control}
+                rules={{
+                    required: {
+                        value: true,
+                        message: 'Укажите рейтинг'
+                    }
+                }}
+            />
             <Form handleFormSubmit={handleSubmit(handleSubmitFormReview)}>
                 <FormInput
                     {...textRegister}

@@ -4,7 +4,7 @@ import { Footer } from '../footer';
 import { Header } from '../header';
 import { Logo } from '../logo/index';
 import { Search } from '../search-form/index';
-import { isLiked } from '../../utils/products';
+import { isLiked, userReviews } from '../../utils/products';
 import api from '../../utils/api';
 import { CatalogPage } from '../../pages/catalog-page';
 import { ProductPage } from '../../pages/product-page';
@@ -83,7 +83,7 @@ export function App() {
       .then((updateCard) => {
         const newProducts = cards.map(cardState => {
           return cardState._id === updateCard._id ? updateCard : cardState
-        })
+        });
 
         setCards(newProducts);
 
@@ -95,6 +95,14 @@ export function App() {
 
         return updateCard;
       })
+  }
+
+  function handleProductReview(product, review) {
+    let reviewData = { ...review };
+    return api.setProductReview(product, reviewData)
+      .then((updateCard) => {
+        setCards && setCards(updateCard)
+      });
   }
 
   const onCloseModalForm = () => {
@@ -198,6 +206,7 @@ export function App() {
         favorites,
         currentSort,
         handleLike: handleProductLike,
+        handleReview: handleProductReview,
         isLoading,
         onSortData: sortedData,
         setCurrentSort

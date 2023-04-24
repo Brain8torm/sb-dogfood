@@ -1,7 +1,10 @@
 .wrapper{
+    gap: 10px;
+    display: flex;
+}
+.stars {
 
 }
-
 .star{
 
 }
@@ -16,4 +19,8 @@
 
 .star__icon_editable {
     cursor: pointer;
+}
+
+.value {
+
 }

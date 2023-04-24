@@ -1,15 +1,14 @@
 import classNames from 'classnames';
 import styles from './product.module.css';
-import { calcDiscountPrice, isLiked } from '../../utils/products';
+import { calcDiscountPrice, calcReviewRating, isLiked } from '../../utils/products';
 import { ReactComponent as LikeIcon } from '../card/images/save.svg';
 import truck from "./images/truck.svg";
 import quality from "./images/quality.svg";
 import { Button } from '../button';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { UserContext } from '../../contexts/current-user-context';
 import { ContentHeader } from '../content-header';
-import { MAX_COUNT_RATING } from '../../utils/config';
 import { Rating } from '../rating';
 import { FormReview } from '../form-review';
 
@@ -21,19 +20,24 @@ function Product({
     discount,
     description,
     likes = [],
-    reviews,
-    onProductLike
+    reviews = [],
+    onProductLike,
+    onProductReview,
+    setProduct
 }) {
 
-    const { currentUser } = useContext(UserContext);
-    const [currentRating, setCurrentRating] = useState(MAX_COUNT_RATING);
+    //const [currentRating, setCurrentRating] = useState(MAX_COUNT_RATING);
 
+    const { currentUser } = useContext(UserContext);
+            
     const navigate = useNavigate();
     const location = useLocation();
 
     const discount_price = calcDiscountPrice(price, discount);
+    
+    const rate = calcReviewRating(reviews);
     const like = isLiked(likes, currentUser?._id);
-
+    
     function handleLikeClick() {
         onProductLike({ likes, _id })
     }
@@ -47,7 +51,7 @@ function Product({
         <div className='product'>
             <ContentHeader title={name} textButton='Назад'>
                 <p className={classNames(styles.articul)}>Артикул: <b>2388907</b></p>
-                <Rating currentRating={currentRating} />
+                <Rating currentRating={rate}  />
             </ContentHeader>
             <div className={classNames(styles.header)}>
                 
@@ -77,7 +81,7 @@ function Product({
                             <span className={classNames(styles.num)}>0</span>
                             <button className={classNames(styles.plus)}>+</button>
                         </div>
-                        <Button href="#" type="primary" style="wide" >В корзину</Button>
+                            <Button href='#' type='primary' style='wide'>В корзину</Button>
 
                     </div>
                     <div className={classNames(styles.btn_wrap)}>
@@ -143,7 +147,13 @@ function Product({
             </div>
         </div>
 
-        <FormReview title={`Отзыв о товаре ${name}`} />
+            <FormReview
+                title={`Отзыв о товаре ${name}`}
+                productId={_id}
+                rate={rate}
+                setProduct={setProduct}
+                onProductReview={onProductReview}
+            />
         </>
     );
 }

@@ -4,11 +4,14 @@ import { FormInput } from '../form-input';
 import styles from './form-review.module.css';
 import classNames from 'classnames';
 import { Rating } from '../rating';
+import { Controller, useForm } from 'react-hook-form';
+import api from '../../utils/api';
 import { useState } from 'react';
 import { MAX_COUNT_RATING } from '../../utils/config';
-import { Controller, useForm } from 'react-hook-form';
 
-export function FormReview({ title = 'Отзыв о товаре', productId, setProduct }) {
+export function FormReview({ title = 'Отзыв о товаре', productId, rate, setProduct }) {
+
+    const [rating, setRating] = useState(MAX_COUNT_RATING);
 
     const {
         register,
@@ -18,12 +21,15 @@ export function FormReview({ title = 'Отзыв о товаре', productId, se
         reset
     } = useForm({ mode: 'onBlur' });
 
-    const [rating, setRating] = useState(MAX_COUNT_RATING);
+
 
     const handleSubmitFormReview = (data) => {
-        console.log('handleSubmitFormReview', { ...data, rating });
-        reset();
-        setRating(MAX_COUNT_RATING)
+        api.setProductReview(productId, { ...data, rating })
+            .then(newProduct => {
+                setProduct && setProduct(newProduct)
+                reset();
+                setRating(rate)
+            })
     };
 
     const textRegister = register('text', {

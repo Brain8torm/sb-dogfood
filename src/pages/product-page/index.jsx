@@ -5,7 +5,6 @@ import { Spinner } from '../../components/spinner';
 import { useParams } from 'react-router-dom';
 import { NotFound } from '../../components/not-found';
 import { CardsContext } from '../../contexts/cards-context';
-import { UserContext } from '../../contexts/current-user-context';
 import { useApi } from '../../hooks';
 
 export const ProductPage = () => {
@@ -15,13 +14,20 @@ export const ProductPage = () => {
     const { data: product, loading: isLoading, error: errorState, setData: setProduct } = useApi(handleGetProduct);
   
     
-    const { handleLike } = useContext(CardsContext);
+    const { handleLike, handleReview } = useContext(CardsContext);
+    
 
     function handleProductLike(product) {
         handleLike(product)
             .then(updateCard => {
                 setProduct(updateCard);
             });
+    }
+
+    function handleProductReview(product, data) {
+        handleReview(product, data).then(updateCard => {
+            setProduct(updateCard);
+        });
     }
 
     return (
@@ -31,7 +37,9 @@ export const ProductPage = () => {
                 : !errorState &&
                 <Product
                     {...product}
+                    setProduct={setProduct}
                     onProductLike={handleProductLike}
+                    onProductReview={handleProductReview}
                 />
             }
             {!isLoading && errorState && <NotFound title='Товар не найден' />}

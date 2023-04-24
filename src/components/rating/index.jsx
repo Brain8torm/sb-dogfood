@@ -42,7 +42,8 @@ export function Rating({ isEditable = false, currentRating, setCurrentRating }) 
 
     return (
         <div className={classNames('rating', styles.wrapper)}>
-            {ratingArray.map((r, i) => <span className={classNames(styles.star)} key={i}>{r}</span>)}
+            <span className={styles.stars}>{ratingArray.map((r, i) => <span className={classNames(styles.star)} key={i}>{r}</span>)}</span>
+            <span className={styles.value}>{currentRating}</span>
         </div>
 
     );

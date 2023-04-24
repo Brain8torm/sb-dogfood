@@ -54,7 +54,13 @@ class Api {
 
   getProductById(idProduct) {
     return fetch(this.#getApiUrl(`/products/${idProduct}`), {
-      headers: this.#headers
+      headers: this.#headers,
+    }).then(this.#onResponse);
+  }
+
+  getProductReviews(idProduct) {
+    return fetch(this.#getApiUrl(`/products/review/${idProduct}`), {
+      headers: this.#headers,
     }).then(this.#onResponse);
   }
 
@@ -66,7 +72,7 @@ class Api {
     return fetch(this.#getApiUrl(`/products/review/${idProduct}`), {
       method: 'POST',
       headers: this.#headers,
-      body: JSON.stringify(review)
+      body: JSON.stringify(review),
     }).then(this.#onResponse);
   }
 }

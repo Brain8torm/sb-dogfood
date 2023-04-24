@@ -11,6 +11,7 @@ import { UserContext } from '../../contexts/current-user-context';
 import { ContentHeader } from '../content-header';
 import { Rating } from '../rating';
 import { FormReview } from '../form-review';
+import { Reviews } from '../reviews';
 
 function Product({
     _id,
@@ -146,6 +147,8 @@ function Product({
                 </div>
             </div>
         </div>
+
+            <Reviews reviews={reviews} />
 
             <FormReview
                 title={`Отзыв о товаре ${name}`}

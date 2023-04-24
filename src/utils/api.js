@@ -61,6 +61,14 @@ class Api {
   getInfoProduct(idProduct) {
     return Promise.all([this.getProductById(idProduct), this.getUserInfo()]);
   }
+
+  setProductReview(idProduct, review) {
+    return fetch(this.#getApiUrl(`/products/review/${idProduct}`), {
+      method: 'POST',
+      headers: this.#headers,
+      body: JSON.stringify(review)
+    }).then(this.#onResponse);
+  }
 }
 
 const api = new Api({

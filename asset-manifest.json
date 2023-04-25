@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/sb-dogfood/static/css/main.73eab357.css",
-    "main.js": "/sb-dogfood/static/js/main.42687980.js",
+    "main.js": "/sb-dogfood/static/js/main.e82137ba.js",
     "static/media/nunito-all-800-normal.woff": "/sb-dogfood/static/media/nunito-all-800-normal.ddbd5c5e63da59bd0cd0.woff",
     "static/media/nunito-all-500-normal.woff": "/sb-dogfood/static/media/nunito-all-500-normal.adbe667d9c2b5551ae14.woff",
     "static/media/nunito-all-400-normal.woff": "/sb-dogfood/static/media/nunito-all-400-normal.0c07f750f73ac5437580.woff",
@@ -48,10 +48,10 @@
     "static/media/ic-left-arrow.svg": "/sb-dogfood/static/media/ic-left-arrow.7cdf3dabb670f03ef0f81c2a1d4af180.svg",
     "static/media/telegram.svg": "/sb-dogfood/static/media/telegram.bf74394fae48b0af95c098ff8d5c05cc.svg",
     "main.73eab357.css.map": "/sb-dogfood/static/css/main.73eab357.css.map",
-    "main.42687980.js.map": "/sb-dogfood/static/js/main.42687980.js.map"
+    "main.e82137ba.js.map": "/sb-dogfood/static/js/main.e82137ba.js.map"
   },
   "entrypoints": [
     "static/css/main.73eab357.css",
-    "static/js/main.42687980.js"
+    "static/js/main.e82137ba.js"
   ]
 }

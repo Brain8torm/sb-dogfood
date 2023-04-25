@@ -8,13 +8,13 @@ import "@fontsource/nunito/500.css";
 import "@fontsource/nunito/800.css";
 
 import './styles.css';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 
 const rootElement = document.getElementById('app');
 const root = createRoot(rootElement);
 
 root.render(
-  <BrowserRouter>
+  <HashRouter>
     <App />
-  </BrowserRouter>
+  </HashRouter>
 );

@@ -4,14 +4,13 @@ import { ReactComponent as FavoriteIcon } from './images/ic-favorites.svg';
 import { ReactComponent as CartIcon } from './images/ic-cart.svg';
 import { ReactComponent as ProfileIcon } from './images/ic-profile.svg';
 import { Button } from '../button';
-import { useContext, useState } from 'react';
-import { UserContext } from '../../contexts/current-user-context';
-import { CardsContext } from '../../contexts/cards-context';
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export function Header({ children }) {
-  const { currentUser, onUserUpdate } = useContext(UserContext);
-  const { favorites } = useContext(CardsContext);
+  const currentUser = useSelector(state => state.user.data);
+  const favorites = useSelector(state => state.products.favoriteProducts);
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
 
@@ -22,7 +21,7 @@ export function Header({ children }) {
 
 
   const handleEditBtnClick = () => {
-    onUserUpdate({ name: 'Андрей Кудряшов2', about: 'Веб-разработчик' })
+    //onUserUpdate({ name: 'Андрей Кудряшов2', about: 'Веб-разработчик' })
   }
 
   const handleDropDownToggle = () => {

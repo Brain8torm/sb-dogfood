@@ -5,14 +5,13 @@ import styles from './form-review.module.css';
 import classNames from 'classnames';
 import { Rating } from '../rating';
 import { Controller, useForm } from 'react-hook-form';
-import api from '../../utils/api';
-import { useState } from 'react';
-import { MAX_COUNT_RATING } from '../../utils/config';
+import { useDispatch } from 'react-redux';
+import { fetchCreateReview } from '../../storage/single-product/single-product-slice';
 
-export function FormReview({ title = 'Отзыв о товаре', productId, rate, setProduct }) {
 
-    const [rating, setRating] = useState(MAX_COUNT_RATING);
+export function FormReview({ title = 'Отзыв о товаре', productId }) {
 
+    const dispatch = useDispatch();
     const {
         register,
         control,
@@ -21,15 +20,9 @@ export function FormReview({ title = 'Отзыв о товаре', productId, ra
         reset
     } = useForm({ mode: 'onBlur' });
 
-
-
     const handleSubmitFormReview = (data) => {
-        api.setProductReview(productId, { ...data, rating })
-            .then(newProduct => {
-                setProduct && setProduct(newProduct)
-                reset();
-                setRating(rate)
-            })
+        dispatch(fetchCreateReview({ productId, data }));
+        reset();
     };
 
     const textRegister = register('text', {

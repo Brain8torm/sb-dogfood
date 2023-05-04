@@ -21,16 +21,22 @@ import { Modal } from '../modal';
 import { Login } from '../login';
 import { Register } from '../register';
 import { ResetPassword } from '../reset-password';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchChangeLikeProduct, fetchProducts, sortedProducts } from '../../storage/products/products-slice';
+import { fetchUser } from '../../storage/user/user-slice';
 
 export function App() {
-  const [cards, setCards] = useState([]);
-  const [favorites, setFavorites] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
+  // const [cards, setCards] = useState([]);
+  const cards = useSelector(state => state.products.data);
+  //const [favorites, setFavorites] = useState([]);
+  //const [currentUser, setCurrentUser] = useState(null);
+  const currentUser = useSelector(state => state.user.data);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoading = useSelector(state => state.products.loading);
   const [isTyping, setIsTyping] = useState(false);
   const [currentSort, setCurrentSort] = useState('');
   const [modalFormStatus, setModalFormStatus] = useState(true);
+  const dispatch = useDispatch();
 
   const debounceSearchQuery = useDebounce(searchQuery, 300);
 
@@ -66,43 +72,19 @@ export function App() {
 
   function handleRequest() {
     api.search(debounceSearchQuery).then((dataSearch) => {
-      setCards(dataSearch);
+      //setCards(dataSearch);
     });
   }
 
   function handleUserUpdate(dataUserUpdate) {
     api.setUserInfo(dataUserUpdate)
       .then((updateUserFromServer) => {
-        setCurrentUser(updateUserFromServer)
+        //setCurrentUser(updateUserFromServer)
       })
   }
 
   function handleProductLike(product) {
-    const like = isLiked(product.likes, currentUser._id)
-    return api.changeLikeProductStatus(product._id, like)
-      .then((updateCard) => {
-        const newProducts = cards.map(cardState => {
-          return cardState._id === updateCard._id ? updateCard : cardState
-        });
-
-        setCards(newProducts);
-
-        if (!like) {
-          setFavorites(prevState => [...prevState, updateCard])
-        } else {
-          setFavorites(prevState => prevState.filter(card => card._id !== updateCard._id))
-        }
-
-        return updateCard;
-      })
-  }
-
-  function handleProductReview(product, review) {
-    let reviewData = { ...review };
-    return api.setProductReview(product, reviewData)
-      .then((updateCard) => {
-        setCards && setCards(updateCard)
-      });
+    return dispatch.fetchChangeLikeProduct(product);
   }
 
   const onCloseModalForm = () => {
@@ -110,29 +92,20 @@ export function App() {
   }
 
   useEffect(() => {
-    setIsLoading(true);
-    api.getAllInfo()
-      .then(([productsData, userInfoData]) => {
-        setCurrentUser(userInfoData);
-        setCards(productsData.products);
-
-        const favoriteProduct = productsData.products.filter(item => isLiked(item.likes, userInfoData._id));
-
-        setFavorites(favoriteProduct);
+    dispatch(fetchUser())
+      .then(() => {
+        dispatch(fetchProducts())
       })
-      .catch(err => console.log(err))
-      .finally(() => {
-        setIsLoading(false);
-      });
   }, []);
 
+
   function sortedData(currentSort) {
-    switch (currentSort) {
-      case (SORT_TABS_ID.CHEAP): setCards(cards.sort((a, b) => a.price - b.price)); break;
-      case (SORT_TABS_ID.LOW): setCards(cards.sort((a, b) => b.price - a.price)); break;
-      case (SORT_TABS_ID.DISCOUNT): setCards(cards.sort((a, b) => b.discount - a.discount)); break;
-      default: setCards(cards.sort((a, b) => b.price - a.price));
-    }
+    /*     switch (currentSort) {
+          case (SORT_TABS_ID.CHEAP): setCards(cards.sort((a, b) => a.price - b.price)); break;
+          case (SORT_TABS_ID.LOW): setCards(cards.sort((a, b) => b.price - a.price)); break;
+          case (SORT_TABS_ID.DISCOUNT): setCards(cards.sort((a, b) => b.discount - a.discount)); break;
+          default: setCards(cards.sort((a, b) => b.price - a.price));
+        } */
   }
 
   const cbSubmitFormLoginRegister = (dataForm) => {
@@ -201,19 +174,7 @@ export function App() {
 
   return (
     <>
-      <CardsContext.Provider value={{
-        cards,
-        favorites,
-        currentSort,
-        handleLike: handleProductLike,
-        handleReview: handleProductReview,
-        isLoading,
-        onSortData: sortedData,
-        setCurrentSort
-      }} >
-        <UserContext.Provider
-          value={{ currentUser, onUserUpdate: handleUserUpdate }}
-        >
+
           <Header>
             <Routes
               location={(backgroundLocation && {
@@ -288,8 +249,7 @@ export function App() {
             } />
           </Routes>}
           <MobileBar />
-        </UserContext.Provider>
-      </CardsContext.Provider>
+
     </>
   )
 }

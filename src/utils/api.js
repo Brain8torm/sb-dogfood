@@ -75,6 +75,13 @@ class Api {
       body: JSON.stringify(review),
     }).then(this.#onResponse);
   }
+
+  deleteProductReview(idProduct, idReview) {
+    return fetch(this.#getApiUrl(`/products/review/${idProduct}/${idReview}`), {
+      method: 'DELETE',
+      headers: this.#headers
+    }).then(this.#onResponse);
+  }
 }
 
 const api = new Api({

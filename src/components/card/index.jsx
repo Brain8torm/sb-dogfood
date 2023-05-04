@@ -69,7 +69,7 @@ export function Card({
                 {discount !== 0 ? (
                   <>
                     <span className={classNames(styles.old_price)}>{price}&nbsp;₽</span>
-                    <span className={classNames(styles.price, styles.price_type_discount)}>{discount_price}</span>
+                    <span className={classNames(styles.price, styles.price_type_discount)}>{discount_price}&nbsp;₽</span>
                   </>
                 ) : (
                   <span className={classNames(styles.price)}>{price}&nbsp;₽</span>

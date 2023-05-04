@@ -8,5 +8,6 @@ export const calcReviewRating = (reviews) => {
   reviews.forEach((review, index) => {
     sum += review.rating;
   });
-  return (sum / reviews.length).toFixed(2);
+  
+  return (sum > 0 ? sum / reviews.length : 0).toFixed(2);
 };

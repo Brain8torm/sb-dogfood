@@ -82,6 +82,32 @@ class Api {
       headers: this.#headers
     }).then(this.#onResponse);
   }
+
+  register(data) {
+    return fetch(this.#getApiUrl(`/signup`), {
+        method: 'POST',
+        headers: this.#headers,
+        body: JSON.stringify(data)
+    })
+        .then(this.#onResponse)
+}
+
+authorize(data) {
+    return fetch(this.#getApiUrl(`/signin`), {
+        method: 'POST',
+        headers: this.#headers,
+        body: JSON.stringify(data)
+    })
+        .then(this.#onResponse)
+}
+
+checkToken(token) {
+    return fetch(this.#getApiUrl(`/users/me`), {
+        headers: { ...this.#headers, authorization: `Bearer ${token}` },
+    })
+        .then(this.#onResponse)
+}
+
 }
 
 const api = new Api({

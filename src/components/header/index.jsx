@@ -3,16 +3,21 @@ import classNames from 'classnames';
 import { ReactComponent as FavoriteIcon } from './images/ic-favorites.svg';
 import { ReactComponent as CartIcon } from './images/ic-cart.svg';
 import { ReactComponent as ProfileIcon } from './images/ic-profile.svg';
+import { ReactComponent as LogoutIcon } from './images/ic-logout.svg';
+import { ReactComponent as UserIcon } from './images/ic-user.svg';
 import { Button } from '../button';
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../storage/user/user-slice';
 
 export function Header({ children }) {
   const currentUser = useSelector(state => state.user.data);
   const favorites = useSelector(state => state.products.favoriteProducts);
+  const dispatch = useDispatch();
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
+
+  console.log('currentUser', currentUser);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -47,19 +52,21 @@ export function Header({ children }) {
           <span className={classNames(styles.icon, 'header_icon__profile', 'dropdown-toggle')} onClick={handleDropDownToggle}>
             <ProfileIcon />
             <div className={classNames(styles.dropdown, { [styles.dropdown__open]: isDropDownOpen })}>
-              {isAuth
-                ?
-                <>
-                  <div>{currentUser?.name}</div>
-                  <div>{currentUser?.about}</div>
-                  <div>{currentUser?.email}</div>
-                  <Button action={handleEditBtnClick}>
-                    Изменить
-                  </Button>
-                </>
-                :
+              {currentUser && <>
+                <div><UserIcon/> {currentUser?.name}</div>
+                <div>{currentUser?.about}</div>
+                <div>{currentUser?.email}</div>
+                <Button action={handleEditBtnClick}>
+                  Изменить
+                </Button>
+                <Link to='/' className={styles.iconsMenuItem} onClick={() => dispatch(logout())}>
+                  <LogoutIcon /> Выйти
+                </Link>
+              </>
+              }
+              {!currentUser &&
                 <Link to='/login' replace state={{ backgroundLocation: location, initialPath: location.pathname }}>Войти</Link>
-            }
+              }
 
             </div>
           </span>

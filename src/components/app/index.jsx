@@ -23,7 +23,11 @@ import { Register } from '../register';
 import { ResetPassword } from '../reset-password';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchChangeLikeProduct, fetchProducts, sortedProducts } from '../../storage/products/products-slice';
-import { fetchUser } from '../../storage/user/user-slice';
+import { checkTokenUser, fetchUser, loginUser, registerUser } from '../../storage/user/user-slice';
+import { ToastContainer } from 'react-toastify';
+import { ProtectedRoute } from '../protected-route';
+import { HomePage } from '../../pages/home-page';
+import { getLocalData } from '../../utils/localStorage';
 
 export function App() {
   // const [cards, setCards] = useState([]);
@@ -91,29 +95,29 @@ export function App() {
     setModalFormStatus(false)
   }
 
+  const token = getLocalData('token')
+
   useEffect(() => {
-    dispatch(fetchUser())
-      .then(() => {
-        dispatch(fetchProducts())
-      })
-  }, []);
+      dispatch(checkTokenUser(token))
+          .then(() => {
+              if (token) {
+                  console.log(currentUser);
+                  dispatch(fetchProducts())
+              }
+          })
+  }, [dispatch, token])
 
 
-  function sortedData(currentSort) {
-    /*     switch (currentSort) {
-          case (SORT_TABS_ID.CHEAP): setCards(cards.sort((a, b) => a.price - b.price)); break;
-          case (SORT_TABS_ID.LOW): setCards(cards.sort((a, b) => b.price - a.price)); break;
-          case (SORT_TABS_ID.DISCOUNT): setCards(cards.sort((a, b) => b.discount - a.discount)); break;
-          default: setCards(cards.sort((a, b) => b.price - a.price));
-        } */
-  }
+
 
   const cbSubmitFormLoginRegister = (dataForm) => {
     console.log('cbSubmitFormLoginRegister', dataForm);
+    dispatch(registerUser(dataForm));
   }
 
   const cbSubmitFormLogin = (dataForm) => {
     console.log('cbSubmitFormLogin', dataForm);
+    dispatch(loginUser(dataForm));
   }
 
   const cbSubmitFormResetPassword = (dataForm) => {
@@ -175,81 +179,102 @@ export function App() {
   return (
     <>
 
-          <Header>
-            <Routes
-              location={(backgroundLocation && {
-                ...backgroundLocation, pathname: initialPath
-              }) || location}>
-              <Route path='/' element={
-                <>
-                  <Logo />
-                  <Search
-                    handleInputChange={handleInputChange}
-                    handleFormSubmit={handleFormSubmit}
-                    handleSearchEscClick={handleSearchEscClick}
-                    searchQuery={debounceSearchQuery}
-                  />
-                </>
-              } />
-              <Route path='*' element={<Logo href='/' />} />
-            </Routes>
-          </Header>
+      <Header>
+        <Routes
+          location={(backgroundLocation && {
+            ...backgroundLocation, pathname: initialPath
+          }) || location}>
+          <Route path='/' element={
+            <>
+              <Logo />
+              <Search
+                handleInputChange={handleInputChange}
+                handleFormSubmit={handleFormSubmit}
+                handleSearchEscClick={handleSearchEscClick}
+                searchQuery={debounceSearchQuery}
+              />
+            </>
+          } />
+          <Route path='*' element={<Logo href='/' />} />
+        </Routes>
+      </Header>
 
-          <main className='content container'>
-            <Routes
-              location={(backgroundLocation && {
-                ...backgroundLocation, pathname: initialPath
-              }) || location}>
-              <Route path='/' element={<CatalogPage isLoading={isLoading} />} />
-              <Route path='/faq' element={<FaqPage />} />
-              <Route path='/favorite' element={<FavoritePage />} />
-              <Route path='/product/:productID' element={<ProductPage />} />
-              <Route path='/login' element={
-                <Login
-                  onSubmit={cbSubmitFormLogin}
-                  onNavigateRegister={handleClickButtonRegisterNotModal}
-                  onNavigateReset={handleClickButtonResetNotModal}
-                />
-              } />
-              <Route path='/register' element={
-                <Register
-                  onSubmit={cbSubmitFormLoginRegister}
-                  onNavigateLogin={handleClickButtonLoginNotModal}
-                />
-              } />
-              <Route path='/reset-password' element={
-                <ResetPassword onSubmit={cbSubmitFormResetPassword} />
-              } />
-              <Route path='*' element={<NotFoundPage />} />
-            </Routes>
+      <main className='content container'>
+        <Routes
+          location={(backgroundLocation && {
+            ...backgroundLocation, pathname: initialPath
+          }) || location}>
+          <Route path='/' element={
+              <HomePage />
+          } />
+                    <Route path='/catalog' element={
+            <ProtectedRoute>
+              <CatalogPage />
+            </ProtectedRoute>
+          } />
+          <Route path='/faq' element={<FaqPage />} />
+          <Route path='/favorite' element={<FavoritePage />} />
+          <Route path='/product/:productID' element={
+            <ProtectedRoute><ProductPage /></ProtectedRoute>
+          } />
+          <Route path='/login' element={
+            <ProtectedRoute onlyUnAuth>
+              <Login
+                onSubmit={cbSubmitFormLogin}
+                onNavigateRegister={handleClickButtonRegisterNotModal}
+                onNavigateReset={handleClickButtonResetNotModal}
+              />
+            </ProtectedRoute>
+          } />
+          <Route path='/register' element={
+            <ProtectedRoute onlyUnAuth>
+              <Register
+                onSubmit={cbSubmitFormLoginRegister}
+                onNavigateLogin={handleClickButtonLoginNotModal}
+              />
+            </ProtectedRoute>
+          } />
+          <Route path='/reset-password' element={
+            <ProtectedRoute onlyUnAuth>
+              <ResetPassword onSubmit={cbSubmitFormResetPassword} />
+            </ProtectedRoute>
+          } />
+          <Route path='*' element={<NotFoundPage />} />
+        </Routes>
 
 
-          </main>
-          <Footer />
-          {backgroundLocation && <Routes>
-            <Route path='/login' element={
-              <Modal isOpen onClose={onCloseRoutingModal}>
-                <Login
-                  onSubmit={cbSubmitFormLogin}
-                  onNavigateRegister={handleClickButtonRegister}
-                  onNavigateReset={handleClickButtonReset} />
-              </Modal>
-            } />
-            <Route path='/register' element={
-              <Modal isOpen onClose={onCloseRoutingModal}>
-                <Register
-                  onSubmit={cbSubmitFormLoginRegister}
-                  onNavigateLogin={handleClickButtonLogin} />
-              </Modal>
-            } />
-            <Route path='/reset-password' element={
-              <Modal isOpen onClose={onCloseRoutingModal}>
-                <ResetPassword onSubmit={cbSubmitFormResetPassword} />
-              </Modal>
-            } />
-          </Routes>}
-          <MobileBar />
-
+      </main>
+      <Footer />
+      {backgroundLocation && <Routes>
+        <Route path='/login' element={
+          <ProtectedRoute onlyUnAuth>
+            <Modal isOpen onClose={onCloseRoutingModal}>
+              <Login
+                onSubmit={cbSubmitFormLogin}
+                onNavigateRegister={handleClickButtonRegister}
+                onNavigateReset={handleClickButtonReset} />
+            </Modal>
+          </ProtectedRoute>
+        } />
+        <Route path='/register' element={
+          <ProtectedRoute onlyUnAuth>
+          <Modal isOpen onClose={onCloseRoutingModal}>
+            <Register
+              onSubmit={cbSubmitFormLoginRegister}
+              onNavigateLogin={handleClickButtonLogin} />
+            </Modal>
+            </ProtectedRoute>
+        } />
+        <Route path='/reset-password' element={
+          <ProtectedRoute onlyUnAuth>
+          <Modal isOpen onClose={onCloseRoutingModal}>
+            <ResetPassword onSubmit={cbSubmitFormResetPassword} />
+            </Modal>
+            </ProtectedRoute>
+        } />
+      </Routes>}
+      <MobileBar />
+      <ToastContainer theme="colored" />
     </>
   )
 }

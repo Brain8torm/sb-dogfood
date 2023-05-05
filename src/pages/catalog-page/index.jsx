@@ -1,9 +1,6 @@
-import { useContext } from 'react';
 import { SORT_TABS } from '../../utils/config';
 import { CardList } from '../../components/card-list';
 import { Sort } from '../../components/sort';
-import { CardsContext } from '../../contexts/cards-context';
-import styles from './catalog-page.module.css';
 import { ContentHeader } from '../../components/content-header';
 import { useSelector } from 'react-redux';
 

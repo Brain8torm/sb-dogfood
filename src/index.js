@@ -6,7 +6,7 @@ import '@fontsource/nunito/300.css';
 import '@fontsource/nunito/400.css';
 import '@fontsource/nunito/500.css';
 import '@fontsource/nunito/800.css';
-
+import 'react-toastify/dist/ReactToastify.css';
 import './styles.css';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -17,8 +17,8 @@ const root = createRoot(rootElement);
 
 root.render(
   <Provider store={store}>
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>
+    </BrowserRouter>
   </Provider>
 );

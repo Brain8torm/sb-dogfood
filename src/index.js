@@ -1,9 +1,24 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import { App } from "./components/app";
-import "./styles.css";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { App } from './components/app';
 
-const rootElement = document.getElementById("app");
+import '@fontsource/nunito/300.css';
+import '@fontsource/nunito/400.css';
+import '@fontsource/nunito/500.css';
+import '@fontsource/nunito/800.css';
+import 'react-toastify/dist/ReactToastify.css';
+import './styles.css';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './storage/store';
+
+const rootElement = document.getElementById('app');
 const root = createRoot(rootElement);
 
-root.render(<App />);
+root.render(
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
+);

@@ -1,15 +1,26 @@
-@import "~normalize.css";
-@import "~@fontsource/nunito";
+@import '~normalize.css';
 
 body {
-  font-family: "Nunito", "Arial", "Helvetica", sans-serif;
+  font-family: 'Nunito', 'Arial', 'Helvetica', sans-serif;
+  color: #1a1a1a;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .container {
   max-width: 1024px;
   padding-left: 16px;
   padding-right: 16px;
-  width: 95%;
+  width: calc(100% - 32px);
   margin: 0 auto;
 }
 
@@ -19,6 +30,7 @@ img {
 
 .content {
   padding: 20px 0;
+  flex: 1;
 }
 
 .content__sort {
@@ -27,4 +39,20 @@ img {
 
 .result {
   font-size: 40px;
+}
+
+
+.message__info {
+  color: #7B8E98;
+  margin: 20px 0px;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.message__error {
+  text-align: end;
+  color: red;
+  font-size: 12px;
+  align-self: flex-start;
 }
